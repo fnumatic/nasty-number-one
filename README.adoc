@@ -1,0 +1,19 @@
+= nasty-one
+
+A simple dice game.
+Sum up as much dicing points as you can. Try to avoid the nasty number 1.
+
+
+
+== Using babashka
+
+https://github.com/babashka/babashka[babashka]
+
+----
+./run watch
+./run compile
+./run release
+./run purgecss
+./run buildreport
+----
+
