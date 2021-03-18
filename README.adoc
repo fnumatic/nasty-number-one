@@ -3,7 +3,9 @@
 A simple dice game.
 Sum up as much dicing points as you can. Try to avoid the nasty number 1.
 
+https://fnumatic.github.io/nasty-number-one/
 
+image::nasty-number-one.png[]
 
 == Using babashka
 
