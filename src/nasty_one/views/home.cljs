@@ -36,12 +36,6 @@
    :header [:text-2xl :font-semibold :pt-2 :pb-4 :text-center :text-gray-700]
    :big-panel [:flex  :space-x-1 :items-stretch]})
 
-
-(defn main2 []
-  [:div
-   [:h2.text-4xl "home"]
-   [:p "nothing to see here"]])
-
 (defn player-stats [{:keys [name active? round total]}]
   (let [ cl-player  (twon active? [[:text-center :p-2] :bg-green-600])]
    [:div (tw [:w-full :text-center :p-2])
@@ -82,15 +76,6 @@
      [dicer-ui]
      [action-panel]]
     [stats]]))
-
-
-
-
-(def toolbar-items
-  [
-   ["#" :routes/frontpage]
-   ["component" :routes/component]])
-
 
 ;; main
 

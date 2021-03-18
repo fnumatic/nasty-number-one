@@ -2,12 +2,11 @@
   (:require
     [re-frame.core :as rf]
     [reitit.frontend :as rtf]
-    [reitit.frontend.history :as rtfh]
     [reitit.frontend.easy :as rtfe]
     [reitit.coercion.schema :as rsc]
     [nasty-one.use-cases.core-cases :as ccases]
     [nasty-one.views.home :as home]
-    [nasty-one.views.compo :as compo]))
+    ))
 
 ;;https://clojure.org/guides/weird_characters#__code_code_var_quote
 (def routes
@@ -16,9 +15,7 @@
        [""
         {:name :routes/frontpage
          :view #'home/main}]
-       ["component"
-        {:name :routes/component
-         :view #'compo/main}]]
+       ]
 
       {:data {:coercion rsc/coercion}}))
 
