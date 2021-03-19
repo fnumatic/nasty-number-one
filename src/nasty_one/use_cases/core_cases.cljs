@@ -70,12 +70,31 @@
 (rf/reg-sub ::active-panel (gdb [:active-panel]))
 (rf/reg-sub ::re-pressed-example  (gdb [:re-pressed-example]))
 
+
+
 (rf/reg-event-db ::initialize-db (constantly db/default-db))
 (rf/reg-event-db ::set-active-panel [rf/debug] (sdb [:active-panel]))
 
 
 (rf/reg-sub :dice/players (gdb [:players]))
 (rf/reg-sub :dice/active-dice (gdb [:active-dice]))
+(rf/reg-sub :dice/max-value (gdb [:max-value]))
+
+(rf/reg-sub :dice/max-player-value 
+ :<- [:dice/players]
+ (fn [players _]
+   (->> players
+        (map :total)
+        (reduce max) )))
+
+(rf/reg-sub :dice/winner
+ :<- [:dice/players]
+ (fn [players _]
+   (->> players
+        (sort-by :total)
+        reverse
+        first)))
+
 
 (rf/reg-event-fx :dice/dice dice)
 (rf/reg-event-fx :dice/endround endround)

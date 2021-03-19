@@ -44,12 +44,23 @@
     [:div (tw [:text-center :p-2]) total]]))
 
 (defn stats []
-  (r/with-let [players (rf/subscribe [:dice/players])]
+  (r/with-let [players (rf/subscribe [:dice/players])
+               max-totals (rf/subscribe [:dice/max-player-value])
+               max-value (rf/subscribe [:dice/max-value])
+               winner (rf/subscribe [:dice/winner])]
    [:div (tw [:mt-4])
-    [:h3 (tw [:text-center :font-semibold]) "Score"]
+    [:h3 (tw [:text-center :font-semibold :text-gray-700 :px-10])
+     "Score"  ]
     [:div (tw [:flex :space-x-2 :p-1])
      (for [[idx pl] (map-indexed vector @players)]
-      ^{:key idx} [player-stats pl])]]))
+      ^{:key idx} [player-stats pl])]
+    [:div (tw [:text-center])
+     (if (<= @max-value @max-totals)
+       [:span (tw [:font-semibold :bg-red-400 :p-2])
+        (str "Winner is " (:name @winner) " with " (:total @winner) " points")]
+       [:span (tw [:font-semibold]) (str @max-totals " / " @max-value)])
+     ]
+    ]))
 
 (defn action-panel []
   [:div  (tw [:flex :flex-col :space-y-2 :p-3 :flex-1 ])
@@ -68,14 +79,15 @@
     [:div (tw [:text-7xl :text-gray-700]) (get symbols @dice)]]))
 
 (defn main []
-  (r/with-let [dice (rf/subscribe [:dice/active-dice])]
+  (r/with-let []
    [:div  (tw (:cnt css))
     [:h2  (tw (:header css) ) "The nasty number " 
      [:span (tw (:number css)) "1"]]
     [:div  (tw (:big-panel css))
      [dicer-ui]
      [action-panel]]
-    [stats]]))
+    [stats]
+    ]))
 
 ;; main
 
