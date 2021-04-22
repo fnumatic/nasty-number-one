@@ -8,17 +8,19 @@
   update-npm {:task (shell "npx npm-check-updates -u")}
   update-deps {:task (shell "clojure -Aoutdated -a outdated --write")}
   
-  deploy-docs {:task (let [rp "resources/public"
-                           html  "index.html"
+  deploy-docs {:task (let [rp   "resources/public"
                            dest "docs"
-                           main "js/main.js"]
-                      (do
-                        (fs/create-dirs (fs/file dest "js"))
-                        (fs/copy (fs/file rp html) (fs/file dest  html)  {:replace-existing true})
-                        (fs/copy (fs/file rp main) (fs/file dest main){:replace-existing true} )
-                        (run! (fn [f] (fs/copy f (fs/file dest (fs/file-name f)) {:replace-existing true})) (fs/glob rp "**.{css}") )
-                        nil
-                        ,))}
+                           destjs (str dest "/js")
+                           cp-to (fn [f dir]  
+                                   (fs/copy f (fs/file dir (fs/file-name f)) 
+                                            {:replace-existing true}))]
+                       (do
+                         (fs/create-dirs destjs )
+                         (cp-to (fs/file rp "index.html") dest )
+                         (cp-to (fs/file rp "js/main.js") destjs)
+                         (run! (fn [f] (cp-to f dest)) (fs/glob rp "**.{css}") )
+                         nil
+                         ))}
  ;;tailwind 
   prod-css {:task (shell "npm run-script twp")}
   dev-css {:task (shell "npm run-script tw")}
