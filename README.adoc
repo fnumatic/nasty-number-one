@@ -12,10 +12,10 @@ image::nasty-number-one.png[]
 https://github.com/babashka/babashka[babashka]
 
 ----
-./run watch
-./run compile
-./run release
-./run purgecss
-./run buildreport
+bb watch
+bb compile
+bb release
+bb prod-css
+bb buildreport
 ----
 
