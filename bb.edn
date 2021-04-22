@@ -1,4 +1,4 @@
-;;bb >= v1.35
+;;bb >= v0.35
 {:tasks
  {:requires  ([babashka.fs :as fs])
   watch {:task (shell "npx shadow-cljs watch app")}
